@@ -2,6 +2,4 @@ TOKEN:=$(shell hcp vault-secrets run --app=Packer -- env | grep PROXMOX_APITOKEN
 
 export TF_VAR_api_token_secret=${TOKEN}
 
-TF_WORKSPACE:="k3s"
-
 
