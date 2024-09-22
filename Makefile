@@ -7,7 +7,7 @@ vm:
 	cd tf && \
 		terraform init && \
 		terraform plan -out vm.tfplan && \
-		terraform apply vm.tfplan && \
+		terraform apply vm.tfplan
 
 destroy-vm:
 	$(info TERRAFORM: Destroying VM)
