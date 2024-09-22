@@ -1,5 +1,6 @@
-module "proxmox" {
-  source = "./proxmox"
+module "cloudinit" {
+  source  = "luminosita/cloudinit/proxmox"
+  version = "0.0.1"
 
   providers = {
     proxmox = proxmox
