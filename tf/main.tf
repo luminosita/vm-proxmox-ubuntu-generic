@@ -1,6 +1,6 @@
 module "cloudinit" {
   source  = "luminosita/cloudinit/proxmox"
-  version = "0.0.1"
+  version = "0.0.2"
 
   providers = {
     proxmox = proxmox
@@ -9,13 +9,13 @@ module "cloudinit" {
   os = { 
     vm_base_url                 = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
     vm_base_image               = "noble-server-cloudimg-amd64.img"
-    vm_base_image_checksum      = "21dc4933dc022406b20df78d81fd34d953799ff133d826c2f3136f6936887a52"    
+    vm_base_image_checksum      = "fad101d50b06b26590cf30542349f9e9d3041ad7929e3bc3531c81ec27f2c788"    
     vm_base_image_checksum_alg  = "sha256"
     vm_node_name                = "proxmox"
   }
 
   images = { 
-    "ejabberd" = {
+    "ubuntu-noble" = {
       vm_user                     = "ubuntu"
       vm_ssh_public_key_files     = [
           "~/.ssh/id_rsa.pub",
@@ -23,8 +23,19 @@ module "cloudinit" {
           ]
       
       vm_id                       = 1001
-      vm_name                     = "ejabberd"
+      vm_name                     = "ubuntu-noble"
       vm_node_name                = "proxmox"
+
+      vm_run_cmds    = [
+        "apt-get update",
+        "apt-get install -y ca-certificates curl",
+        "install -m 0755 -d /etc/apt/keyrings",
+        "curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc",
+        "chmod a+r /etc/apt/keyrings/docker.asc",
+        "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable\" | tee /etc/apt/sources.list.d/docker.list > /dev/null",
+        "apt-get update",
+        "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+      ]
     }
   }
 }
