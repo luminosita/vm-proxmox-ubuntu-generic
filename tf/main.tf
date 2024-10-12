@@ -34,7 +34,10 @@ module "cloudinit" {
         "chmod a+r /etc/apt/keyrings/docker.asc",
         "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo \"$VERSION_CODENAME\") stable\" | tee /etc/apt/sources.list.d/docker.list > /dev/null",
         "apt-get update",
-        "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin"
+        "apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin",
+        "rm -rf /usr/local/go",
+        "curl -L https://go.dev/dl/go1.23.2.linux-amd64.tar.gz | tar xz -C /usr/local",
+        "echo \"PATH=$PATH:/usr/local/go/bin\" >> /home/ubuntu/.profile"
       ]
     }
   }
