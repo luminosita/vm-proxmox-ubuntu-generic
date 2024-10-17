@@ -37,8 +37,8 @@ locals {
 }
 
 module "cloudinit" {
-  source  = "luminosita/cloudinit/proxmox"
-  version = "0.0.3"
+  source  = "../../terraform-proxmox-cloudinit" #"luminosita/cloudinit/proxmox"
+  #version = "0.0.3"
 
   providers = {
     proxmox = proxmox
