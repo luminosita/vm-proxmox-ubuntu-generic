@@ -9,15 +9,6 @@ variable "proxmox" {
     })
 }
 
-###############################  API ##############################
-variable "api_token_id" {
+variable "proxmox_api_token" {
     type    = string
-}
-
-variable "api_token_secret" {
-    type    = string
-}
-
-locals {
-  api_token = "${var.api_token_id}=${var.api_token_secret}"
 }
